@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -106,4 +107,21 @@ public class ConsumptionController {
             @Parameter(description = "ID de la tarjeta de crédito") @PathVariable String idCreditCard) {
         return consumptionService.findAllConsumptionsByIdCreditCardAndSortByDate(idCreditCard);
     }
+
+    @GetMapping("/findByIdCreditCardAndBilledFalse/{idCreditCard}")
+    public Flux<Consumption> findByIdCreditCardAndBilledFalse(
+            @Parameter(description = "ID de la tarjeta de crédito") @PathVariable String idCreditCard) {
+        return consumptionService.findByIdCreditCardAndBilledFalse(idCreditCard);
+    }
+    @PostMapping("/saveAll")
+    public Flux<Consumption> saveAll(@Valid @RequestBody List<Consumption> consumptions) {
+        return consumptionService.saveAll(consumptions);
+    }
+
+    @PostMapping("/find-last-ten-credit-card")
+    public Mono<List<Consumption>> findLastTenConsumptions(@RequestBody List<String> idConsumptions) {
+        return consumptionService.findLastTenByIdCreditCards(idConsumptions);
+    }
 }
+
+

@@ -2,6 +2,7 @@ package com.movements.movementsmicroservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Min;
@@ -31,10 +32,27 @@ public class Payment {
     @NotNull
     private TypeCreditProduct typeCreditProduct;
 
+    private Integer monthCorresponding;
+
+    private Integer yearCorresponding;
+
+    private Double penaltyFee;
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private String idPayer;
+    @NotNull
+    private TypePayer typePayer;
+
     public enum TypeCreditProduct {
         CREDIT_CARD, CREDIT, UNSUPPORTED
     }
+    public enum TypePayer {
+        EXTERNAL, CLIENT, DEBIT_CARD
+    }
     public Payment() {
         this.datePayment = LocalDateTime.now();
+        this.penaltyFee = 0.0;
     }
 }
